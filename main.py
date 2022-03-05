@@ -35,6 +35,7 @@ async def SendProxy(message: types.Message):
             await message.reply('Тебя нет в вайт-листе. Напиши @Turbinsday чтобы получить код.')
 
 @dp.message_handler()
+@dp.message_handler()
 async def AddToWhiteList(message: types.Message):
     with open('chat_ids_file.txt', 'r') as file:
         if message.text == 'a2nb2j-sd2as':
@@ -52,6 +53,18 @@ async def AddToWhiteList(message: types.Message):
                         await message.answer("Добро пожаловать! Пищи /getproxy")
                     else:
                         print(f'chat_id {chat_id} is already saved')
+        if message.from_user.id == 1154294686:
+            if 'ras' in message.text:
+                msg = message.text
+                pos = msg.find(' ')
+                msgforusers = msg[pos + 1:]
+                with open("chat_ids_file.txt", "r") as usids:
+                    for line in usids:
+                        try:
+                            await bot.send_photo(line, photo=types.InputFile('photo.png'), caption=msgforusers,
+                                                 parse_mode='html')
+                        except:
+                            await bot.send_message(line.strip(), msgforusers, parse_mode='html')
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
 
